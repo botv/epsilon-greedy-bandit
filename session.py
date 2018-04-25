@@ -11,24 +11,6 @@ class Session:
         self.arms_array = np.flip(np.sort(np.random.rand(accuracy,
                                                          arms), 1), 1)
 
-    def pull(self, q, epsilon):
-        score = 0
-        results = []
-        for arms in self.arms_array:
-            local = []
-            bandit = Bandit(arms)
-            agent = Epsilon_Greedy(len(arms), q)
-            for k in range(self.steps):
-                action = agent.epsilon_greedy(bandit, epsilon)
-                reward = bandit.reward(action)
-                agent.steps[action] += 1
-                agent.update_estimates(action, reward, k)
-                local.append(action)
-                score += reward
-            results.append(local)
-        print(str(score / len(self.arms_array)) + " / " + str(self.steps))
-        return(results)
-
     def graph_percent_optimal_action(self, actions, labels):
         def fix_axes(actions):
             plot = []
@@ -47,6 +29,24 @@ class Session:
     def run(self, agents):
         results = []
         labels = []
+
+        def run_single(self, q, epsilon):
+            score = 0
+            results = []
+            for arms in self.arms_array:
+                local = []
+                bandit = Bandit(arms)
+                agent = Epsilon_Greedy(len(arms), q)
+                for k in range(self.steps):
+                    action = agent.epsilon_greedy(bandit, epsilon)
+                    reward = bandit.reward(action)
+                    agent.steps[action] += 1
+                    agent.update_estimates(action, reward, k)
+                    local.append(action)
+                    score += reward
+                results.append(local)
+            print(str(score / len(self.arms_array)) + " / " + str(self.steps))
+            return(results)
         for agent in agents:
             labels.append(r'$Q_0 = %s, \epsilon = %s$'
                           % (agent[0], agent[1]))
