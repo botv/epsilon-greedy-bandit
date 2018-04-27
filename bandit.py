@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
+import ast
 
 
 class Bandit:
@@ -84,7 +85,7 @@ class Session:
 def main():
     session = Session(2000, 2, 500)
     try:
-        session.run(sys.argv[1])
+        session.run(ast.literal_eval(sys.argv[1]))
     except IndexError:
         print("No agents were specified.")
 
