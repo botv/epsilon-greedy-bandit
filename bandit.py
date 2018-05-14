@@ -1,7 +1,8 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import sys
 import ast
+import sys
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class Bandit:
@@ -91,4 +92,5 @@ def main():
 
 
 if __name__ == '__main__':
+    # Another test commit
     main()
