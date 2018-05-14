@@ -84,7 +84,7 @@ class Session:
 
 
 def main():
-    session = Session(2000, 2, 500)
+    session = Session(1000, 2, 500)
     try:
         session.run(ast.literal_eval(sys.argv[1]))
     except IndexError:
