@@ -19,14 +19,14 @@ class Agent:
         for arm in range(arms):
             self.steps[arm] = 0
 
-    def epsilon_greedy(self, bandit, epsilon):
+    def epsilon_greedy(self, epsilon):
         if np.random.rand() < epsilon:
             action = np.random.choice(np.arange(len(self.estimates)))
         else:
             action = np.argmax(self.estimates)
         return(action)
 
-    def update_estimates(self, a, r, k):
+    def update_estimates(self, a, r):
         self.estimates[a] += ((1 / (self.steps[a] + 1)
                                * (r - self.estimates[a])))
 
@@ -45,10 +45,10 @@ class Session:
             bandit = Bandit(arms)
             agent = Agent(len(arms), q)
             for k in range(self.steps):
-                action = agent.epsilon_greedy(bandit, epsilon)
+                action = agent.epsilon_greedy(epsilon)
                 reward = bandit.reward(action)
                 agent.steps[action] += 1
-                agent.update_estimates(action, reward, k)
+                agent.update_estimates(action, reward)
                 local.append(action)
                 score += reward
             results.append(local)
@@ -56,9 +56,9 @@ class Session:
         return(results)
 
     def graph_percent_optimal_action(self, actions, labels):
-        def fix_axes(actions):
+        def fix_axes(actions_list):
             plot = []
-            steps = np.swapaxes(actions, 0, 1)
+            steps = np.swapaxes(actions_list, 0, 1)
             for a in steps:
                 plot.append(100 * (np.count_nonzero(a == 0) / len(a)))
             return plot
