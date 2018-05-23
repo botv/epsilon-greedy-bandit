@@ -9,7 +9,7 @@ class Bandit:
         self.arms = arms
 
     def reward(self, a):
-        return(np.random.rand() < self.arms[a])
+        return (np.random.rand() < self.arms[a])
 
 
 class Agent:
@@ -24,7 +24,7 @@ class Agent:
             action = np.random.choice(np.arange(len(self.estimates)))
         else:
             action = np.argmax(self.estimates)
-        return(action)
+        return (action)
 
     def update_estimates(self, a, r):
         self.estimates[a] += ((1 / (self.steps[a] + 1)
@@ -53,7 +53,7 @@ class Session:
                 score += reward
             results.append(local)
         print(str(score / len(self.arms_array)) + " / " + str(self.steps))
-        return(results)
+        return (results)
 
     def graph_percent_optimal_action(self, actions, labels):
         def fix_axes(actions_list):
@@ -62,6 +62,7 @@ class Session:
             for a in steps:
                 plot.append(100 * (np.count_nonzero(a == 0) / len(a)))
             return plot
+
         for index, arr in enumerate(actions):
             plt.plot(fix_axes(arr), label=labels[index])
         plt.axis([0, self.steps, 0, 100])
